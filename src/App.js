@@ -2,21 +2,15 @@ import logo from './logo.svg';
 import './App.css';
 
 function App() {
+  const generate = () => {
+    window.open(`https://damp-coast-91943.herokuapp.com/generate-csv/all/all/all/waiting_approve`, '_blank')
+  }
   return (
     <div className="App">
       <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
+        <button onClick={() => generate()}>
+          <h1>generate csv</h1>
+        </button>
       </header>
     </div>
   );
