@@ -6,9 +6,11 @@ import './App.css';
 function App() {
   const [data, setData] = React.useState(null)
   const generate = () => {
-
+const api = ''
     Axios.get('/users').then(res => {
-      setData(res.data)
+      console.log(res.data)
+      // setData(res.data)
+
     })
     // window.open(`http://localhost:2324/generate-csv/all/all/all/waiting_approve`, '_blank')
   }
