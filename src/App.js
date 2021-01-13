@@ -1,31 +1,63 @@
-import React from 'react'
-import Axios from 'axios'
-import logo from './logo.svg';
+import React from 'react';
 import './App.css';
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Redirect,
+  useLocation
+} from "react-router-dom";
+import Login from './components/Login';
+import RoomList from './components/RoomList';
+import AddRoom from './components/AddRoom';
+import ChatRoom from './components/ChatRoom';
 
 function App() {
-  const [data, setData] = React.useState(null)
-  const generate = () => {
-const api = ''
-    Axios.get('/users').then(res => {
-      console.log(res.data)
-      // setData(res.data)
-
-    })
-    // window.open(`http://localhost:2324/generate-csv/all/all/all/waiting_approve`, '_blank')
+  let location = useLocation();
+  function SecureRoute({ children, ...rest }) {
+    return (
+      <Route
+        {...rest}
+        render={({ location }) =>
+          localStorage.getItem('nickname') ? (
+            children
+          ) : (
+            <Redirect
+              to={{
+                pathname: "/login",
+                state: { from: location }
+              }}
+            />
+          )
+        }
+      />
+    );
   }
   return (
-    <div className="App">
-      <header className="App-header">
-        <button onClick={() => generate()}>
-          <h1>Get All Users</h1>
-        </button>
-      {data ? data.map((data, index) => {
-        return <p key={index}>{data.name}</p>
-      }) : <p>null</p>}
-      </header>
-
-    </div>
+    <Router>
+      <div>
+        <Redirect
+          to={{
+            pathname: "/roomlist",
+            state: { from: location }
+          }}
+        />
+        <Switch>
+          <Route path="/login">
+            <Login />
+          </Route>
+          <SecureRoute path="/roomlist">
+            <RoomList />
+          </SecureRoute>
+          <SecureRoute path="/addroom">
+            <AddRoom />
+          </SecureRoute>
+          <SecureRoute path="/chatroom/:room">
+            <ChatRoom />
+          </SecureRoute>
+        </Switch>
+      </div>
+    </Router>
   );
 }
 

@@ -16,27 +16,15 @@ app.use(function (req, res, next) {
 });
 module.exports = function() {
 
-app.use(
-    '/users',
-    createProxyMiddleware({
+    app.use('/proxy', createProxyMiddleware({
+        pathRewrite: {
+            '^/proxy': '/'
+        },
         target: 'http://jsonplaceholder.typicode.com',
+        secure: false,
         changeOrigin: true,
-    })
-);
-    // app.use('/proxy', createProxyMiddleware({
-    //     pathRewrite: {
-    //         '^/proxy': '/'
-    //     },
-    //     target: 'http://jsonplaceholder.typicode.com',
-    //     secure: false,
-    //     changeOrigin: true,
-    //     ws: true,
-    //     router: {
-    //         // when request.headers.host == 'dev.localhost:3000',
-    //         // override target 'http://www.example.org' to 'http://localhost:8000'
-    //         'http://localhost:3000/': 'http://jsonplaceholder.typicode.com/',
-    //     },
-    // }))
+        ws: true,
+    }))
 
 
 }
